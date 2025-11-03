@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Status da Operação</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            /* REQUISITO 2.a: Cor de fundo */
+            background-color: #f4f4f9; 
+        }
+        .container {
+            /* REQUISITO 2.b: Centralização (Centraliza o container) */
+            margin: 100px auto; 
+            padding: 20px;
+            border: 1px solid #ccc;
+            width: 80%;
+            max-width: 600px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+            background-color: white;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Resultado da Operação</h1>
+        
+        <% if (loginStatus === "Sucesso (Status simulado via GET)") { %>
+            <h2 style="color: green;">Login Realizado com <%= loginStatus %>!</h2>
+            <p>Seu servidor Node.js/Express está servindo páginas dinâmicas corretamente.</p>
+        <% } else { %>
+            <h2 style="color: red;">Status: <%= loginStatus %></h2>
+            <p>Ocorreu um erro ou o status é genérico.</p>
+        <% } %>
+
+        <br>
+        <p><a href="/">Voltar para a Página de Projetos</a></p>
+    </div>
+</body>
+</html>

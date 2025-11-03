@@ -4,14 +4,14 @@ var express = require('express');
 var path = require('path');
 
 var app = express();
-const PORT = 3000;
 
-// Mudamos o caminho para buscar o arquivo projects.html dentro de public/sobre_mim
-app.get('/', (req, res) => {
-    // path.join(__dirname, 'public', 'sobre_mim', 'projects.html')
-    // Monta o caminho completo para o seu arquivo de índice na subpasta
-    res.sendFile(path.join(__dirname, 'public', 'sobre_mim', 'projects.html'));
-});
+const PORT = 3000; 
+
+
+app.set('view engine', 'ejs'); 
+
+app.set('views', path.join(__dirname, 'views'));
+
 
 const subpastas = [
     'animation',
@@ -22,13 +22,39 @@ const subpastas = [
     'sobre_mim' 
 ];
 
-// Loop para mapear dinamicamente cada pasta para a sua respectiva rota
+
+app.get('/', (req, res) => {
+    
+    res.sendFile(path.join(__dirname, 'public', 'sobre_mim', 'projects.html'));
+});
+
+
+app.get('/cadastra', (req, res) => {
+    
+    res.sendFile(path.join(__dirname, 'public', 'sobre_mim', 'Cadastro.html'));
+});
+
+
+app.get('/login', (req, res) => {
+    
+    res.sendFile(path.join(__dirname, 'public', 'sobre_mim', 'Login.html'));
+});
+
+
+app.get('/status-login', (req, res) => {
+    
+    const status = "Sucesso (Status simulado via GET)"; 
+    
+    res.render('resposta', { loginStatus: status }); 
+});
+
+
+
 subpastas.forEach(pasta => {
-    // Exemplo: app.use('/animation', express.static(path.join(__dirname, 'public', 'animation')));
     app.use(`/${pasta}`, express.static(path.join(__dirname, 'public', pasta)));
 });
 
-// Serve o restante dos arquivos em 'public'
+
 app.use(express.static(path.join(__dirname, 'public')));
 
 
@@ -38,10 +64,14 @@ var server = http.createServer(app);
 // Inicia o servidor
 server.listen(PORT, () => {
     console.log("servidor rodando...".rainbow);
-    console.log(`\nÍNDICE DO PORTFÓLIO (Comece aqui!): http://localhost:${PORT}/`);
-    console.log("\nRotas mapeadas para projetos:".bold.yellow);
     
+    console.log(`\nÍNDICE DO PORTFÓLIO (REQUISITO 3.b): http://localhost/`); 
+    console.log(`PÁGINA DE CADASTRO (REQUISITO 3.c): http://localhost/cadastra`); 
+    console.log(`PÁGINA DE LOGIN (REQUISITO 3.d): http://localhost/login`); 
+    console.log(`PÁGINA EJS (REQUISITO 4.a): http://localhost/status-login`); 
+    
+    console.log("\nRotas mapeadas para projetos:".bold.yellow);
     subpastas.forEach(pasta => {
-        console.log(`   > ${pasta}: http://localhost:${PORT}/${pasta}/`);
+        console.log(`   > http://localhost/${pasta}/`);
     });
 });
